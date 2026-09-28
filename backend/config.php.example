@@ -1,0 +1,12 @@
+<?php
+// Copy to a file outside the public web root, or expose these values as hosting env vars.
+// Never commit the real file or plaintext admin password.
+return [
+    'db_dsn' => 'mysql:host=94.181.26.163;dbname=exucite_fsb;charset=utf8mb4',
+    'db_user' => 'exucite_fsb',
+    'db_password' => 'SET_IN_HOSTING_PANEL',
+    // Generate with password_hash($password, PASSWORD_DEFAULT), then remove the password.
+    'admin_password_hash' => 'REPLACE_WITH_PASSWORD_HASH',
+    'admin_session_secret' => 'REPLACE_WITH_LONG_RANDOM_SECRET',
+    'cookie_domain' => '',
+];

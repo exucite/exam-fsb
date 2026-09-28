@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import type { PublicQuestion } from '@/lib/types';
+import { apiFetch } from '@/lib/api';
 
 export function TestForm() {
   const router = useRouter();
@@ -36,8 +37,8 @@ export function TestForm() {
 
     const load = async () => {
       try {
-        const res = await fetch(
-          `/api/questions?staticId=${encodeURIComponent(parsed.staticId ?? '')}`
+        const res = await apiFetch(
+          `questions.php?staticId=${encodeURIComponent(parsed.staticId ?? '')}`
         );
         if (res.status === 403) {
           const data: any = await res.json();
@@ -134,7 +135,7 @@ export function TestForm() {
 
     setSubmitting(true);
     try {
-      const res = await fetch('/api/submit', {
+      const res = await apiFetch('submit.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

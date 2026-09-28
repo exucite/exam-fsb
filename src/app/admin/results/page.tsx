@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import type { AdminResultRow } from '@/lib/types';
+import { apiFetch } from '@/lib/api';
 
 interface AdminStats {
   todayCount: number;
@@ -36,7 +37,7 @@ export default function AdminResultsPage() {
     setResetting(true);
     setResetState(null);
     try {
-      const res = await fetch('/api/admin/reset-cooldown', {
+      const res = await apiFetch('admin/reset-cooldown.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ staticId }),
@@ -64,7 +65,7 @@ export default function AdminResultsPage() {
   useEffect(() => {
     const loadStats = async () => {
       try {
-        const res = await fetch('/api/admin/stats');
+        const res = await apiFetch('admin/stats.php');
         if (res.status === 401) {
           router.push('/admin/login');
           return;
@@ -84,7 +85,7 @@ export default function AdminResultsPage() {
     const load = async () => {
       try {
         const query = search ? `?q=${encodeURIComponent(search)}` : '';
-        const res = await fetch(`/api/admin/results${query}`);
+        const res = await apiFetch(`admin/results.php${query}`);
 
         if (res.status === 401) {
           router.push('/admin/login');
@@ -111,13 +112,13 @@ export default function AdminResultsPage() {
   }, [search, router]);
 
   const handleLogout = async () => {
-    await fetch('/api/admin/logout', { method: 'POST' });
+    await apiFetch('admin/logout.php', { method: 'POST' });
     router.push('/admin/login');
   };
 
   const handleExport = async () => {
     try {
-      const res = await fetch('/api/admin/export');
+      const res = await apiFetch('admin/export.php');
       if (!res.ok) {
         setError('Не удалось скачать CSV');
         return;
