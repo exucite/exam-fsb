@@ -1,0 +1,17 @@
+node_modules
+.next
+.open-next
+src/generated
+out
+next-env.d.ts
+*.log
+.DS_Store
+.env
+.env.local
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+coverage
+.wrangler
+*.tsbuildinfo
